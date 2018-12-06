@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import * as firebase from 'firebase';
 import logo from './logo.svg';
 import './App.css';
-import RoomList from './components/Roomlist.js'
+import RoomList from './components/Roomlist.js';
+import MessageList from './components/MessageList.js';
 
   var config = {
     apiKey: "AIzaSyD8OKzrBfJcUEE789thujbk06NrCc9Njnc",
@@ -17,14 +18,28 @@ import RoomList from './components/Roomlist.js'
 class App extends Component {
   constructor(props){
     super(props)
+    this.state = {
+      activeRoom: '',
+    };
   }
+  
+  setActiveRoom(room){
+    this.setState({
+      activeRoom: room
+    });
+  }
+  
   render() {
+    const messagesList = this.state.activeRoom;
     return (
       <div className="App">
-        <div class="sidebar">
+        <div className="sidebar">
         <h1>Bloc Chat</h1>
-        <RoomList firebase={firebase}></RoomList>
+        <RoomList firebase={firebase} activeRoom={this.state.activeRoom} setActiveRoom={(room) => this.setActiveRoom(room)}></RoomList>
         </div>
+        
+          <MessageList firebase={firebase} activeRoom={this.state.activeRoom}/>
+          
       </div>
     );
   }
