@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import RoomList from './components/Roomlist.js';
 import MessageList from './components/MessageList.js';
+import User from './components/User.js';
 
   var config = {
     apiKey: "AIzaSyD8OKzrBfJcUEE789thujbk06NrCc9Njnc",
@@ -20,12 +21,19 @@ class App extends Component {
     super(props)
     this.state = {
       activeRoom: '',
+      user: ''
     };
   }
   
   setActiveRoom(room){
     this.setState({
       activeRoom: room
+    });
+  }
+  
+  setUser(user){
+    this.setState({
+      user: user
     });
   }
   
@@ -39,7 +47,7 @@ class App extends Component {
         </div>
         
           <MessageList firebase={firebase} activeRoom={this.state.activeRoom}/>
-          
+          <User user={this.state.user} firebase={firebase} setUser={(user) => this.setUser(user)}/> 
       </div>
     );
   }
